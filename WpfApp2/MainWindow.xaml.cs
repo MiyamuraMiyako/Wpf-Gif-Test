@@ -45,16 +45,20 @@ namespace WpfApp2
                 var image = new List<(BitmapSource image, int delay)>();
                 using var collection = new MagickImageCollection("Wait.gif");
                 collection.Coalesce();
+                int i = 0;
                 foreach (var magickImage in collection)
                 {
                     if (magickImage.AnimationDelay == 0)
                     {
+                        await magickImage.WriteAsync($"{i}.png");
                         image.Add((magickImage.ToBitmapSource(), 0x0a * 10));
                     }
                     else
                     {
+                        await magickImage.WriteAsync($"{i}.png");
                         image.Add((magickImage.ToBitmapSource(), (int)magickImage.AnimationDelay * 10));
                     }
+                    i++;
                 };
                 //-----------
 
